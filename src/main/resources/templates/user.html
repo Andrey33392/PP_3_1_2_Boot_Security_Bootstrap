@@ -7,61 +7,55 @@
 </head>
 <body>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<h1>User, welcome spring boot security page!</h1>
-<style>
-    table th, table td, form {
-        padding: 10px 5px;
-        font-family: sans-serif;
-        font-size: 14px;
-        border-style: solid;
-        border-width: 1px;
-        background-color: ivory;
-    }
-    button {
-        padding: 5px;
-        background: gold;
-    }
-    .buttonLogout {
-        padding: 5px;
-        background-color: deepskyblue;
-    }
-</style>
-<table class="table ">
 
-    <tr>
-        <th>id </th>
-        <th>name</th>
-        <th>Email</th>
-        <th>age</th>
-<!--        <th>password</th>-->
-<!--        <th>role</th>-->
-        <th>edit</th>
-    </tr>
-    <tr class="table-info">
-        <td rowspan="1" th:text="${user.getId()}"></td>
-        <td colspan="1" th:text="${user.getName()}"></td>
-        <td th:text="${user.getEmail()}"></td>
-        <td th:text="${user.getAge()}"></td>
-<!--        <td th:text="${user.getPassword()}">Password</td>-->
-<!--        <td-->
-<!--                th:block th:each="role : *{user.getRoles()}">-->
-<!--            &nbsp;<span th:text="${role.name}"/>-->
-<!--        </td>-->
-        <td><a style="color: orange" th:href="@{/{id}(id =${user.getId()})}">edit</a></td>
-    </tr>
+<div class="container">
+    <h1>User, welcome spring boot security page!</h1>
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-primary btn-lg btn-block"  onclick="window.location.href = '/user';" >User</button>
+
+        </div>
+
+        <div class="col-10">
+            <div class="card-body" bg-primary text="white">
+                <h1>About user</h1>
+                <table class="table table-hover ">
+
+                    <tr>
+                        <th>id </th>
+                        <th>name</th>
+                        <th>Email</th>
+                        <th>age</th>
+                        <!--        <th>password</th>-->
+                        <th>role</th>
+                        <!--        <th>edit</th>-->
+                    </tr>
+                    <tr >
+                        <td rowspan="1" th:text="${user.getId()}"></td>
+                        <td colspan="1" th:text="${user.getName()}"></td>
+                        <td th:text="${user.getEmail()}"></td>
+                        <td th:text="${user.getAge()}"></td>
+                        <!--        <td th:text="${user.getPassword()}">Password</td>-->
+                        <td
+                                th:block th:each="role : *{user.getRoles()}">
+                            &nbsp;<span th:text="${role.name}"/>
+                        </td>
+                        <!--        <td><a style="color: orange" th:href="@{/{id}(id =${user.getId()})}">edit</a></td>-->
+                    </tr>
 
 
 
 
 
-</table>
-<button onclick="window.location.href = '/admin';">Admin</button>
+                </table>
 
-<br/>
+            </div>
 
-<button onclick="window.location.href = '/logout';">logout</button>
-<br/>
-<button onclick="window.location.href = '/registration';">Registration</button>
+        </div>
+    </div>
+</div>
+
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

@@ -18,6 +18,7 @@ import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,43 +44,45 @@ public class AdminController {
 
     @GetMapping("/user_id/{id}")
     public String getUser(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.getById(id));
+        model.addAttribute("user1", userService.getById(id));
 
         return "admin";
     }
 
+    @GetMapping("/user_id")
+    public String pageUser(Model model, Principal principal) {
+        model.addAttribute("user", userService.findByEmail(principal.getName()));
+        return "user_id";
+    }
     @GetMapping("/edit/{id}")
     public String updateUserFrom(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.getById(id));
+        model.addAttribute("user1", userService.getById(id));
         model.addAttribute("listRoles", roleService.findAll());
         return "admin";
     }
 
-    @PatchMapping("/{id}/update")
-    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult
-            , @RequestParam("listRoles") List<Long> roles) {
-        if (bindingResult.hasErrors())
-            return "admin";
+    @PutMapping("/{id}/edit")
+    public String updateUser(@ModelAttribute("user1") @Valid User user, @RequestParam("listRoles") List<Long> roles) {
+
         user.setRoles(roleService.getRolesByIds(roles));
         userService.updateUser(user);
         return "redirect:/admin";
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id) {
         userService.deleteUserById(id);
         return "redirect:/admin";
     }
 
-    @GetMapping("/addUser")
+    @GetMapping("/admin/addUser")
     public String createUser(Model model) {
         model.addAttribute("userFrom", new User());
         return "admin";
     }
 
-    @PostMapping("/addUser")
-    public String addUser(@ModelAttribute("userFrom") @Valid User user, BindingResult bindingResult,
-                          @RequestParam("listRoles") List<Long> roles) {
+    @PostMapping("/admin/addUser")
+    public String addUser(@ModelAttribute("userFrom") @Valid User user, BindingResult bindingResult, @RequestParam("listRoles") List<Long> roles) {
 //        userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
             return "admin";
